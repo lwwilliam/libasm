@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 int ft_strlen(char * str);
 char *ft_strcpy(char *dst, char *src);
 int ft_strcmp(char *s1, char *s2);
 ssize_t ft_write(int fd, char* str, size_t count);
-ssize_t read(int fd, char* str, size_t count);
-char *strdup(const char *s);
+ssize_t ft_read(int fd, char* str, size_t count);
+char *ft_strdup(const char *s);
 
 
 
@@ -43,4 +44,13 @@ int main()
     char *s4 = "abc";
     printf("strcmp: %d %d %d %d\n", strcmp(s1, s2), strcmp(s2,s3), strcmp(s1,s3), strcmp(s1, s4));
     printf("ft_strcmp: %d %d %d %d\n", ft_strcmp(s1, s2), ft_strcmp(s2,s3), ft_strcmp(s1,s3), ft_strcmp(s1, s4));
+
+    printf ("\n\n----------ft_write----------\n");
+    char *w_str = "testing";
+    int w_len = strlen(w_str);
+    write(1, "write: ", 8);
+    printf(" (%ld)\n", write(1, w_str, w_len));
+
+    ft_write(1, "write: ", 8);
+    printf(" (%ld)\n", ft_write(1, w_str, w_len));
 }
