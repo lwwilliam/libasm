@@ -9,3 +9,4 @@ all:
 rm:
 	rm *.o
 	rm a.out
+	rm *.txt

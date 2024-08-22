@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 int ft_strlen(char * str);
 char *ft_strcpy(char *dst, char *src);
@@ -48,9 +50,16 @@ int main()
     printf ("\n\n----------ft_write----------\n");
     char *w_str = "testing";
     int w_len = strlen(w_str);
+    int fd = open("write.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
     write(1, "write: ", 8);
     printf(" (%ld)\n", write(1, w_str, w_len));
 
+    int w_fd = open("ft_write.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
     ft_write(1, "write: ", 8);
     printf(" (%ld)\n", ft_write(1, w_str, w_len));
+
+    char *w_writeStr = "writing to file\n";
+    int w_writeLen = strlen(w_writeStr);
+    write(fd, w_writeStr, w_writeLen);
+    ft_write(w_fd, w_writeStr , w_writeLen);
 }

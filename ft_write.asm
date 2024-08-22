@@ -8,7 +8,7 @@ ft_write:
     mov rcx, rsi
     mov rdx, rdx
 
-    mov rbx, 1
+    mov rbx, rdi
     mov rax, 4
     int 0x80
 
