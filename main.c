@@ -50,16 +50,36 @@ int main()
     printf ("\n\n----------ft_write----------\n");
     char *w_str = "testing";
     int w_len = strlen(w_str);
-    int fd = open("write.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
     write(1, "write: ", 8);
     printf(" (%ld)\n", write(1, w_str, w_len));
-
-    int w_fd = open("ft_write.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
     ft_write(1, "write: ", 8);
     printf(" (%ld)\n", ft_write(1, w_str, w_len));
 
+    int fd = open("write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    int w_fd = open("ft_write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
     char *w_writeStr = "writing to file\n";
     int w_writeLen = strlen(w_writeStr);
     write(fd, w_writeStr, w_writeLen);
     ft_write(w_fd, w_writeStr , w_writeLen);
+    close(fd);
+    close(w_fd);
+
+    printf ("\n\n----------ft_read----------\n");
+    int r_fd = open("write.txt", O_RDONLY);
+    int r_writeFd = open("ft_write.txt", O_RDONLY);
+
+    char r_buffer[100];
+    int r_len = read(r_fd, r_buffer, 100);
+    write(1, "read: ", 6);
+    write(1, r_buffer, r_len);
+    printf("(%d)\n", r_len);
+
+    char r_writeBuffer[100];
+    int r_writeLen = ft_read(r_writeFd, r_writeBuffer, 100);
+    write(1, "ft_read: ", 9);
+    write(1, r_writeBuffer, r_writeLen);
+    printf("(%d)\n", r_writeLen);
+
+    close(r_fd);
+    close(r_writeFd);
 }

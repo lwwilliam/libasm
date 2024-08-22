@@ -5,12 +5,12 @@ section .text
 global ft_write
 
 ft_write:
-    mov rcx, rsi
-    mov rdx, rdx
+    mov rcx, rsi    ; rcx = str
+    mov rdx, rdx    ; rdx = len
 
-    mov rbx, rdi
-    mov rax, 4
-    int 0x80
+    mov rbx, rdi    ; rbx = fd
+    mov rax, 1      ; syscall number for sys_write
+    syscall         ; call kernel
 
     mov rax, rdx
     ret
