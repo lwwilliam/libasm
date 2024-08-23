@@ -11,7 +11,15 @@ ssize_t ft_write(int fd, char* str, size_t count);
 ssize_t ft_read(int fd, char* str, size_t count);
 char *ft_strdup(const char *s);
 
+void cpyfunct(char *dst, char *src)
+{
+    strcpy(dst, src);
+}
 
+void ft_cpyfunct(char *dst, char *src)
+{
+    ft_strcpy(dst, src);
+}
 
 int main()
 {
@@ -39,13 +47,24 @@ int main()
     printf("ft_strcpy: %p %p %p %p\n", &ft_ret, &ft_dst, &ft_src, &ft_buffer);
     printf("ft_strcpy: %p\n", ft_strcpy(ft_dst, ft_src));
 
+    char *cpy_src = "dst";
+    char *cpy_dst = malloc(sizeof(char) * 10);
+    cpyfunct(cpy_dst, cpy_src);
+    printf("(%s)", cpy_dst);
+
+    char *ft_cpy_src = "dst";
+    char *ft_cpy_dst = malloc(sizeof(char) * 10);
+    ft_cpyfunct(ft_cpy_dst, ft_cpy_src);
+    printf("(%s)", ft_cpy_dst);
+
+
     printf ("\n\n----------ft_strcmp----------\n");
     char *s1 = "abc";
     char *s2 = "123";
     char *s3 = "acb";
     char *s4 = "abc";
     printf("strcmp: %d %d %d %d\n", strcmp(s1, s2), strcmp(s2,s3), strcmp(s1,s3), strcmp(s1, s4));
-    printf("ft_strcmp: %d %d %d %d\n", ft_strcmp(s1, s2), ft_strcmp(s2,s3), ft_strcmp(s1,s3), ft_strcmp(s1, s4));
+    printf("ft_strcmp: %d %d %d %d", ft_strcmp(s1, s2), ft_strcmp(s2,s3), ft_strcmp(s1,s3), ft_strcmp(s1, s4));
 
     printf ("\n\n----------ft_write----------\n");
     char *w_str = "testing";
@@ -53,7 +72,7 @@ int main()
     write(1, "write: ", 8);
     printf(" (%ld)\n", write(1, w_str, w_len));
     ft_write(1, "write: ", 8);
-    printf(" (%ld)\n", ft_write(1, w_str, w_len));
+    printf(" (%ld)", ft_write(1, w_str, w_len));
 
     int fd = open("write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
     int w_fd = open("ft_write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -78,8 +97,19 @@ int main()
     int r_writeLen = ft_read(r_writeFd, r_writeBuffer, 100);
     write(1, "ft_read: ", 9);
     write(1, r_writeBuffer, r_writeLen);
-    printf("(%d)\n", r_writeLen);
+    printf("(%d)", r_writeLen);
 
     close(r_fd);
     close(r_writeFd);
+
+    printf ("\n\n----------ft_strdup----------\n");
+    char *d_str = "test";
+    char *dupped = strdup(d_str);
+
+    printf("strdup: %p %p %s\n", d_str, dupped, dupped);
+    free(dupped);
+
+    char *ft_dupped = ft_strdup(d_str);
+    printf("ft_strdup: %p %p %s\n", d_str, ft_dupped, ft_dupped);
+
 }

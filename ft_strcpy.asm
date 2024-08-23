@@ -4,7 +4,6 @@ section .text
 
 global ft_strcpy
 
-
 ft_strcpy:
     xor     rcx, rcx        ; clear rcx used in byte count 
 

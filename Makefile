@@ -4,9 +4,10 @@ all:
 	nasm -f elf64 -o ft_strcmp.o ft_strcmp.asm
 	nasm -f elf64 -o ft_write.o ft_write.asm
 	nasm -f elf64 -o ft_read.o ft_read.asm
+	nasm -f elf64 -o ft_strdup.o ft_strdup.asm
 
-	gcc -no-pie -o a.out main.c ft_strlen.o ft_strcpy.o ft_strcmp.o ft_write.o \
-		ft_read.o
+	gcc -no-pie -o a.out main.c ft_strlen.o ft_strcpy.o \
+		ft_strcmp.o ft_write.o ft_read.o ft_strdup.o -lc
 
 rm:
 	rm *.o
