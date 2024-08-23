@@ -25,6 +25,8 @@ strlen_end:
     test rax, rax            ; check if malloc succeeded
     je   strdup_fail         ; if malloc failed, return NULL
 
+    mov rdi, rdi
+    ret
     ; Copy the string from RSI to the newly allocated memory at RAX
     mov rdi, rax             ; destination pointer (return value)
     mov rsi, rsi             ; source pointer (original string)
@@ -37,7 +39,6 @@ strcpy_loop:
     cmp al, 0x00
     jne strcpy_loop
 
-    ret
 
 strdup_fail:
     xor rax, rax             ; return NULL if malloc failed
