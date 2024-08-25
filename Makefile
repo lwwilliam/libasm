@@ -1,19 +1,27 @@
-all:
-	nasm -f elf64 -o ft_strlen.o ft_strlen.asm
-	nasm -f elf64 -o ft_strcpy.o ft_strcpy.asm
-	nasm -f elf64 -o ft_strcmp.o ft_strcmp.asm
-	nasm -f elf64 -o ft_write.o ft_write.asm
-	nasm -f elf64 -o ft_read.o ft_read.asm
-	nasm -f elf64 -o ft_strdup.o ft_strdup.asm
+OS := $(shell uname)
 
-	gcc -no-pie -o a.out main.c ft_strlen.o ft_strcpy.o \
-		ft_strcmp.o ft_write.o ft_read.o ft_strdup.o -lc
+ifeq ($(OS), Darwin)
+    FORMAT = macho64
+else
+    FORMAT = elf64
+endif
 
-rm:
-	rm *.o
-	rm a.out
-	rm *.txt
+FILES = ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
+OBJS = $(FILES:=.o)
 
+all: a.out
+
+a.out: $(OBJS) main.c
+	gcc -o $@ main.c $(OBJS)
+
+%.o: %.asm
+	nasm -f $(FORMAT) -o $@ $<
+
+clean:
+	rm -f *.o a.out *.txt
+	# rm -f $(OBJS) a.out *.txt
+
+re: clean all
 
 # https://web.stanford.edu/class/cs107/resources/x86-64-reference.pdf
 # https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/

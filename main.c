@@ -45,18 +45,19 @@ int main()
     char *ft_ret = ft_strcpy(ft_dst, ft_src);
     printf("ft_strcpy: >%s< >%s< >%s<\n", ft_ret, ft_dst, ft_src);
     printf("ft_strcpy: %p %p %p %p\n", &ft_ret, &ft_dst, &ft_src, &ft_buffer);
-    printf("ft_strcpy: %p\n", ft_strcpy(ft_dst, ft_src));
+    printf("ft_strcpy: %p\n\n", ft_strcpy(ft_dst, ft_src));
 
     char *cpy_src = "dst";
     char *cpy_dst = malloc(sizeof(char) * 10);
     cpyfunct(cpy_dst, cpy_src);
-    printf("(%s)", cpy_dst);
+    printf("strcpy: (%s)\n", cpy_dst);
+    free(cpy_dst);
 
     char *ft_cpy_src = "dst";
     char *ft_cpy_dst = malloc(sizeof(char) * 10);
     ft_cpyfunct(ft_cpy_dst, ft_cpy_src);
-    printf("(%s)", ft_cpy_dst);
-
+    printf("ft_strcpy: (%s)", ft_cpy_dst);
+    free(ft_cpy_dst);
 
     printf ("\n\n----------ft_strcmp----------\n");
     char *s1 = "abc";
@@ -71,7 +72,7 @@ int main()
     int w_len = strlen(w_str);
     write(1, "write: ", 8);
     printf(" (%ld)\n", write(1, w_str, w_len));
-    ft_write(1, "write: ", 8);
+    ft_write(1, "ft_write: ", 11);
     printf(" (%ld)", ft_write(1, w_str, w_len));
 
     int fd = open("write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -111,5 +112,4 @@ int main()
 
     char *ft_dupped = ft_strdup(d_str);
     printf("ft_strdup: %p %p %s\n", d_str, ft_dupped, ft_dupped);
-
 }

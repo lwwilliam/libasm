@@ -1,16 +1,22 @@
-section .note.GNU-stack noalloc noexec nowrite progbits
-
 section .text
 
-global ft_write
+global _ft_write
 
-ft_write:
+%define PLATFORM_MACOS 1
+
+%ifdef PLATFORM_MACOS
+%define SYS_WRITE 0x2000004   ; syscall number for write in macOS
+%else
+%define SYS_WRITE 1           ; syscall number for write in Linux
+%endif
+
+_ft_write:
     mov rcx, rsi    ; rcx = str
     mov rdx, rdx    ; rdx = len
 
     mov rbx, rdi    ; rbx = fd
-    mov rax, 1      ; syscall number for sys_write
-    syscall         ; call kernel
+    mov rax, SYS_WRITE      ; syscall number for sys_write
+    syscall                 ; call kernel
 
-    mov rax, rdx
+    mov rdx, rax            ; return value of sys_write
     ret

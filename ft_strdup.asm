@@ -1,29 +1,30 @@
-section .note.GNU-stack
+;section .note.GNU-stack
+
 section .text
 
-global ft_strdup
-extern malloc
+global _ft_strdup
+extern _malloc
 
-ft_strdup:
+_ft_strdup:
     mov rdi, rsi
     xor rcx, rcx
 
-strlen_loop:
+_strlen_loop:
     mov     al, [rdi + rcx]  ; assign byte into al
     cmp     al, 0x00         ; compare byte to null
-    je      strlen_end       ; jump if condition is met
+    je      _strlen_end       ; jump if condition is met
 
     inc     rcx              ; increment the count
-    jmp     strlen_loop      ; jump back to the loop because null byte not found
+    jmp     _strlen_loop     ; jump back to the loop because null byte not found
 
-strlen_end:
+_strlen_end:
     inc rcx                  ; +1 for null terminator
     mov rdx, rcx             ; length + 1 for null
     mov rdi, rdx             ; set the length as the argument for malloc
-    call malloc              ; call malloc (returns pointer in rax)
+    call _malloc              ; call malloc (returns pointer in rax)
 
     test rax, rax            ; check if malloc succeeded
-    je   strdup_fail         ; if malloc failed, return NULL
+    je   _strdup_fail         ; if malloc failed, return NULL
 
     mov rdi, rdi
     ret
@@ -32,14 +33,13 @@ strlen_end:
     mov rsi, rsi             ; source pointer (original string)
     xor rcx, rcx             ; reset index
 
-strcpy_loop:
+_strcpy_loop:
     mov al, [rsi + rcx]
     mov [rdi + rcx], al
     inc rcx
     cmp al, 0x00
-    jne strcpy_loop
+    jne _strcpy_loop
 
-
-strdup_fail:
+_strdup_fail:
     xor rax, rax             ; return NULL if malloc failed
     ret
