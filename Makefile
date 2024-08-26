@@ -2,8 +2,10 @@ OS := $(shell uname)
 
 ifeq ($(OS), Darwin)
     FORMAT = macho64
+	CFLAG = -D__APPLE__
 else
     FORMAT = elf64
+	CFLAG = -no-pie -z execstack
 endif
 
 FILES = ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
@@ -12,7 +14,7 @@ OBJS = $(FILES:=.o)
 all: a.out
 
 a.out: $(OBJS) main.c
-	gcc -o $@ main.c $(OBJS)
+	gcc -o $@ main.c $(OBJS) $(CFLAG)
 
 %.o: %.asm
 	nasm -f $(FORMAT) -o $@ $<
