@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <errno.h>
+
+extern int errno;
 
 int _ft_strlen(char * str);
 char *_ft_strcpy(char *dst, char *src);
@@ -72,9 +75,23 @@ int main()
     char *w_str = "testing";
     int w_len = strlen(w_str);
     write(1, "write: ", 8);
-    printf(" (%ld)\n", write(1, w_str, w_len));
+    printf(" (%ld) ", write(1, w_str, w_len));
+    printf("%s\n", strerror(errno));
     _ft_write(1, "ft_write: ", 11);
-    printf(" (%ld)", _ft_write(1, w_str, w_len));
+    printf(" (%ld) ", _ft_write(1, w_str, w_len));
+    printf("%s\n\n", strerror(errno));
+
+    write(11, "error write: ", 14);
+    printf(" (%ld) ", write(1, w_str, w_len));
+    write(11, w_str, w_len);
+    printf("%s\n", strerror(errno));
+    _ft_write(1, "error ft_write: ", 17);
+    printf(" (%ld) ", _ft_write(1, w_str, w_len));
+    printf("%s", strerror(errno));
+    // int fs = write(11, w_str, w_len);
+    // printf(" %s %d %d\n", strerror(errno), errno, fs);
+    // int ft = write(1, w_str, w_len);
+    // printf(" %s %d %d\n", strerror(errno), errno, ft);
 
     int fd = open("write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
     int w_fd = open("ft_write.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
