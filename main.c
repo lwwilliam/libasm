@@ -121,6 +121,10 @@ int main()
     close(r_fd);
     close(r_writeFd);
 
+    // char r_ft_buffer[100];
+    // int r_ft = _ft_read(1, r_ft_buffer, 100);
+    // printf("\n%s %d %d\n", strerror(errno), errno, r_ft);
+
     printf ("\n\n----------ft_strdup----------\n");
     char *d_str = "abcdefg";
     char *dupped = strdup(d_str);

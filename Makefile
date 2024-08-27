@@ -1,3 +1,5 @@
+NAME = libasm
+
 OS := $(shell uname)
 
 ifeq ($(OS), Darwin)
@@ -9,21 +11,27 @@ else
 endif
 
 FILES = ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
-OBJS = $(FILES:=.o)
 
-all: a.out
+OBJ_DIR = ./obj/
 
-a.out: $(OBJS) main.c
-	gcc -o $@ main.c $(OBJS) $(CFLAG)
+OBJS = $(addprefix $(OBJ_DIR), $(FILES:=.o))
 
-%.o: %.asm
+all: $(NAME)
+
+$(NAME): $(OBJS) main.c
+	ar rcs libasm.a $(OBJS)
+	gcc -o $@ main.c libasm.a $(CFLAG)
+
+$(OBJ_DIR)%.o: %.asm
+	mkdir -p $(OBJ_DIR)
 	nasm -f $(FORMAT) -o $@ $<
 
 clean:
-	rm -f *.o a.out *.txt
-	# rm -f $(OBJS) a.out *.txt
+	rm -f $(NAME) *.txt libasm.a
+	rm -r $(OBJ_DIR)
 
 re: clean all
 
+	# rm -f $(OBJS) $(NAME) *.txt
 # https://web.stanford.edu/class/cs107/resources/x86-64-reference.pdf
 # https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/

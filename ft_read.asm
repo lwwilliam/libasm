@@ -22,7 +22,7 @@ _ft_read:
 
 	ret
 
-_return;
+_return:
     neg rax
     mov rdi, rax
     call __errno_location   ; get the address of errno
