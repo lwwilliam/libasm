@@ -81,12 +81,12 @@ int main()
     printf(" (%ld) ", _ft_write(1, w_str, w_len));
     printf("%s\n\n", strerror(errno));
 
-    write(11, "error write: ", 14);
-    printf(" (%ld) ", write(1, w_str, w_len));
-    write(11, w_str, w_len);
+    write(1, "error write: ", 14);
+    printf(" (%ld) ", write(11, w_str, w_len));
     printf("%s\n", strerror(errno));
+
     _ft_write(1, "error ft_write: ", 17);
-    printf(" (%ld) ", _ft_write(1, w_str, w_len));
+    printf(" (%ld) ", _ft_write(11, w_str, w_len));
     printf("%s", strerror(errno));
     // int fs = write(11, w_str, w_len);
     // printf(" %s %d %d\n", strerror(errno), errno, fs);
