@@ -22,7 +22,7 @@ $(NAME): $(OBJS) main.c
 	ar rcs libasm.a $(OBJS)
 	gcc -o $@ main.c libasm.a $(CFLAG)
 
-$(OBJ_DIR)%.o: %.asm
+$(OBJ_DIR)%.o: %.s
 	mkdir -p $(OBJ_DIR)
 	nasm -f $(FORMAT) -o $@ $<
 
@@ -32,6 +32,6 @@ clean:
 
 re: clean all
 
-	# rm -f $(OBJS) $(NAME) *.txt
+# rm -f $(OBJS) $(NAME) *.txt
 # https://web.stanford.edu/class/cs107/resources/x86-64-reference.pdf
 # https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/

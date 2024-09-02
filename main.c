@@ -15,6 +15,12 @@ ssize_t _ft_read(int fd, char* str, size_t count);
 char *_ft_strdup(const char *s);
 // int _ft_strdup(const char *s);
 
+typedef struct  s_list
+{
+    void    *data;
+    struct s_list   *next;
+}   t_list;
+
 void cpyfunct(char *dst, char *src)
 {
     strcpy(dst, src);
