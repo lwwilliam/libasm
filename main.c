@@ -7,28 +7,80 @@
 
 extern int errno;
 
+typedef struct s_list {
+    void *data;
+    struct s_list *next;
+} t_list;
+
 int _ft_strlen(char * str);
 char *_ft_strcpy(char *dst, char *src);
 int _ft_strcmp(char *s1, char *s2);
 ssize_t _ft_write(int fd, char* str, size_t count);
 ssize_t _ft_read(int fd, char* str, size_t count);
 char *_ft_strdup(const char *s);
-// int _ft_strdup(const char *s);
+int _ft_list_size(t_list *lst);
+void _ft_list_push_front(t_list **lst, t_list *new);
 
-typedef struct  s_list
-{
-    void    *data;
-    struct s_list   *next;
-}   t_list;
-
-void cpyfunct(char *dst, char *src)
-{
+void cpyfunct(char *dst, char *src) {
     strcpy(dst, src);
 }
 
-void ft_cpyfunct(char *dst, char *src)
-{
+void ft_cpyfunct(char *dst, char *src) {
     _ft_strcpy(dst, src);
+}
+
+struct s_list *createNode(int new_data) {
+    struct s_list *new_node = (struct s_list *)malloc(sizeof(struct s_list));
+    if (new_node == NULL) {
+        perror("Failed to allocate memory");
+        exit(EXIT_FAILURE);
+    }
+    
+    int *data = malloc(sizeof(int));
+    if (data == NULL) {
+        perror("Failed to allocate memory for data");
+        exit(EXIT_FAILURE);
+    }
+
+    *data = new_data;
+    new_node->data = data;
+    new_node->next = NULL;
+    
+    return new_node;
+}
+
+void bonus() {
+    struct s_list *head = createNode(1);
+    head->next = createNode(3);
+    head->next->next = createNode(1);
+    head->next->next->next = createNode(2);
+    head->next->next->next->next = createNode(1);
+
+    struct s_list *current = head;
+    while (current != NULL) {
+        printf("Node data: %d\n", *(int *)(current->data));
+        current = current->next;
+    }
+
+    printf ("\n----------ft_list_size----------\n");
+    struct s_list *now = head;
+    printf("ft_list_size: %d\n", _ft_list_size(now));
+
+    printf ("\n----------ft_list_push_front----------\n");
+    struct s_list *old = head;
+    while (old != NULL) {
+        printf("Old Node data: %d\n", *(int *)(old->data));
+        old = old->next;
+    }
+    old = head;
+    struct s_list *new = createNode(4);
+    _ft_list_push_front(&old, new);
+    printf("\nNew data: %d\n\n", *(int *)(new->data));
+
+    while (old != NULL) {
+        printf("New Node data: %d\n", *(int *)(old->data));
+        old = old->next;
+    }
 }
 
 int main()
@@ -145,4 +197,7 @@ int main()
     char *ft_dupped = _ft_strdup(d_str);
     printf("ft_strdup: %p %p %s\n", d_str, ft_dupped, ft_dupped);
     free(ft_dupped);
+
+    printf ("\n\n##########BONUS##########\n");
+    bonus();
 }

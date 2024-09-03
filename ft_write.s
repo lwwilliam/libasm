@@ -17,14 +17,14 @@ _ft_write:
     mov rax, SYS_WRITE      ; syscall number for sys_write
     syscall                 ; call kernel
 
-    test rax, rax
-    js _return
+    test rax, rax           ; test rax 
+    js _return              ; jump if rax is negative number
 
     ret
 
 _return:
-    neg rax
-    mov rdi, rax
+    neg rax                 ; make negative number to positive 
+    mov rdi, rax            ; for errno assign
     call __errno_location   ; get the address of errno
     mov [rax], rdi          ; store rdi (rax) into errno
 

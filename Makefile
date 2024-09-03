@@ -11,27 +11,37 @@ else
 endif
 
 FILES = ft_strlen ft_strcpy ft_strcmp ft_write ft_read ft_strdup
+BONUS = ft_list_size_bonus ft_list_push_front_bonus
 
 OBJ_DIR = ./obj/
 
 OBJS = $(addprefix $(OBJ_DIR), $(FILES:=.o))
+B_OBJS = $(addprefix $(OBJ_DIR), $(BONUS:=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) main.c
+bonus: $(B_OBJS)
+	ar rcs libasm.a $(B_OBJS)
+
+$(NAME): $(OBJS)
 	ar rcs libasm.a $(OBJS)
-	gcc -o $@ main.c libasm.a $(CFLAG)
 
 $(OBJ_DIR)%.o: %.s
 	mkdir -p $(OBJ_DIR)
 	nasm -f $(FORMAT) -o $@ $<
 
+test: $(OBJS)
+	gcc -o $(NAME) main.c libasm.a $(CFLAG)
+
+compile: all bonus test
+
 clean:
-	rm -f $(NAME) *.txt libasm.a
 	rm -r $(OBJ_DIR)
 
-re: clean all
+fclean: clean
+	rm -f $(NAME) *.txt libasm.a
 
-# rm -f $(OBJS) $(NAME) *.txt
+re: fclean all
+
 # https://web.stanford.edu/class/cs107/resources/x86-64-reference.pdf
 # https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
