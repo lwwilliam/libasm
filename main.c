@@ -12,21 +12,21 @@ typedef struct s_list {
     struct s_list *next;
 } t_list;
 
-int _ft_strlen(char * str);
-char *_ft_strcpy(char *dst, char *src);
-int _ft_strcmp(char *s1, char *s2);
-ssize_t _ft_write(int fd, char* str, size_t count);
-ssize_t _ft_read(int fd, char* str, size_t count);
-char *_ft_strdup(const char *s);
-int _ft_list_size(t_list *lst);
-void _ft_list_push_front(t_list **lst, t_list *new);
+int ft_strlen(char * str);
+char *ft_strcpy(char *dst, char *src);
+int ft_strcmp(char *s1, char *s2);
+ssize_t ft_write(int fd, char* str, size_t count);
+ssize_t ft_read(int fd, char* str, size_t count);
+char *ft_strdup(const char *s);
+int ft_list_size(t_list *lst);
+void ft_list_push_front(t_list **lst, t_list *new);
 
 void cpyfunct(char *dst, char *src) {
     strcpy(dst, src);
 }
 
 void ft_cpyfunct(char *dst, char *src) {
-    _ft_strcpy(dst, src);
+    ft_strcpy(dst, src);
 }
 
 struct s_list *createNode(int new_data) {
@@ -64,7 +64,7 @@ void bonus() {
 
     printf ("\n----------ft_list_size----------\n");
     struct s_list *now = head;
-    printf("ft_list_size: %d\n", _ft_list_size(now));
+    printf("ft_list_size: %d\n", ft_list_size(now));
 
     printf ("\n----------ft_list_push_front----------\n");
     struct s_list *old = head;
@@ -74,7 +74,7 @@ void bonus() {
     }
     old = head;
     struct s_list *new = createNode(4);
-    _ft_list_push_front(&old, new);
+    ft_list_push_front(&old, new);
     printf("\nNew data: %d\n\n", *(int *)(new->data));
 
     while (old != NULL) {
@@ -89,7 +89,7 @@ int main()
     char *str = "1234567890";
     int l = strlen(str);
     printf("strlen: %d\n", l);
-    int len = _ft_strlen(str);
+    int len = ft_strlen(str);
     printf("ft_strlen: %d   ", len);
 
     printf ("\n\n----------ft_strcpy----------\n");
@@ -104,10 +104,10 @@ int main()
     char ft_buffer[100];
     char *ft_dst = ft_buffer;
     char *ft_src = "test";
-    char *ft_ret = _ft_strcpy(ft_dst, ft_src);
+    char *ft_ret = ft_strcpy(ft_dst, ft_src);
     printf("ft_strcpy: >%s< >%s< >%s<\n", ft_ret, ft_dst, ft_src);
     printf("ft_strcpy: %p %p %p %p\n", &ft_ret, &ft_dst, &ft_src, &ft_buffer);
-    printf("ft_strcpy: %p\n\n", _ft_strcpy(ft_dst, ft_src));
+    printf("ft_strcpy: %p\n\n", ft_strcpy(ft_dst, ft_src));
 
     char *cpy_src = "dst";
     char *cpy_dst = malloc(sizeof(char) * 10);
@@ -127,7 +127,7 @@ int main()
     char *s3 = "acb";
     char *s4 = "abc";
     printf("strcmp: %d %d %d %d\n", strcmp(s1, s2), strcmp(s2,s3), strcmp(s1,s3), strcmp(s1, s4));
-    printf("ft_strcmp: %d %d %d %d", _ft_strcmp(s1, s2), _ft_strcmp(s2,s3), _ft_strcmp(s1,s3), _ft_strcmp(s1, s4));
+    printf("ft_strcmp: %d %d %d %d", ft_strcmp(s1, s2), ft_strcmp(s2,s3), ft_strcmp(s1,s3), ft_strcmp(s1, s4));
 
     printf ("\n\n----------ft_write----------\n");
     char *w_str = "testing";
@@ -135,16 +135,16 @@ int main()
     write(1, "write: ", 8);
     printf(" (%ld) ", write(1, w_str, w_len));
     printf("%s\n", strerror(errno));
-    _ft_write(1, "ft_write: ", 11);
-    printf(" (%ld) ", _ft_write(1, w_str, w_len));
+    ft_write(1, "ft_write: ", 11);
+    printf(" (%ld) ", ft_write(1, w_str, w_len));
     printf("%s\n\n", strerror(errno));
 
     write(1, "error write: ", 14);
     printf(" (%ld) ", write(11, w_str, w_len));
     printf("%s\n", strerror(errno));
 
-    _ft_write(1, "error ft_write: ", 17);
-    printf(" (%ld) ", _ft_write(11, w_str, w_len));
+    ft_write(1, "error ft_write: ", 17);
+    printf(" (%ld) ", ft_write(11, w_str, w_len));
     printf("%s", strerror(errno));
     // int fs = write(11, w_str, w_len);
     // printf(" %s %d %d\n", strerror(errno), errno, fs);
@@ -156,7 +156,7 @@ int main()
     char *w_writeStr = "writing to file\n";
     int w_writeLen = strlen(w_writeStr);
     write(fd, w_writeStr, w_writeLen);
-    _ft_write(w_fd, w_writeStr , w_writeLen);
+    ft_write(w_fd, w_writeStr , w_writeLen);
     close(fd);
     close(w_fd);
 
@@ -171,7 +171,7 @@ int main()
     printf("(%d)\n", r_len);
 
     char r_writeBuffer[100];
-    int r_writeLen = _ft_read(r_writeFd, r_writeBuffer, 100);
+    int r_writeLen = ft_read(r_writeFd, r_writeBuffer, 100);
     write(1, "ft_read: ", 9);
     write(1, r_writeBuffer, r_writeLen);
     printf("(%d)", r_writeLen);
@@ -179,9 +179,9 @@ int main()
     close(r_fd);
     close(r_writeFd);
 
-    // char r_ft_buffer[100];
-    // int r_ft = _ft_read(1, r_ft_buffer, 100);
-    // printf("\n%s %d %d\n", strerror(errno), errno, r_ft);
+    // char rft_buffer[100];
+    // int rft = ft_read(1, rft_buffer, 100);
+    // printf("\n%s %d %d\n", strerror(errno), errno, rft);
 
     printf ("\n\n----------ft_strdup----------\n");
     char *d_str = "abcdefg";
@@ -194,7 +194,7 @@ int main()
     printf("strdup2: %p %p %s\n", d_str, dupped2, dupped2);
     free(dupped2);
 
-    char *ft_dupped = _ft_strdup(d_str);
+    char *ft_dupped = ft_strdup(d_str);
     printf("ft_strdup: %p %p %s\n", d_str, ft_dupped, ft_dupped);
     free(ft_dupped);
 

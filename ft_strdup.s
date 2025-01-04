@@ -1,13 +1,13 @@
 section .text
 
-global _ft_strdup
+global ft_strdup
 extern malloc
-extern _ft_strcpy
-extern _ft_strlen
+extern ft_strcpy
+extern ft_strlen
 
-_ft_strdup:
+ft_strdup:
     mov rsi, rdi            ; mov original sting to rsi for tmp storing
-    call _ft_strlen         ; call ft_strlen to get the rdi len
+    call ft_strlen         ; call ft_strlen to get the rdi len
 
     push rsi                ; push rsi to memory because other oprator might modify rsi
 
@@ -15,16 +15,16 @@ _ft_strdup:
     call malloc             ; malloc
 
     test rax, rax           ; test rax
-    je   _strdup_fail       ; jump if malloc return error
+    je   strdup_fail       ; jump if malloc return error
 
     pop rsi                 ; pop the pushed rsi 
 
     mov rdi, rax            ; rdi = destination pointer (return value from malloc)
     mov rsi, rsi            ; rsi = source string (unchanged from before)
-    call _ft_strcpy         ; call _ft_strcpy(rdi, rsi)
+    call ft_strcpy         ; call _ft_strcpy(rdi, rsi)
 
     ret
 
-_strdup_fail:
+strdup_fail:
     xor rax, rax             ; return NULL if malloc failed
     ret

@@ -1,6 +1,6 @@
 section .text
 
-global _ft_read
+global ft_read
 extern __errno_location
 
 %ifdef __APPLE__
@@ -9,7 +9,7 @@ extern __errno_location
 %define SYS_READ 0          ; syscall number for write in Linux
 %endif
 
-_ft_read:
+ft_read:
     mov rax, SYS_READ       ; syscall number for sys_read
     mov rbx, rdi            ; rbx = fd
     mov rcx, rsi            ; rcx = buffer
@@ -18,11 +18,11 @@ _ft_read:
     syscall                 ; call kernel
 
     test rax, rax           ; test rax 
-    js _return              ; jump if rax is negative number
+    js return              ; jump if rax is negative number
 
     ret
 
-_return:
+return:
     neg rax                 ; make negative number to positive 
     mov rdi, rax            ; for errno assign
     call __errno_location   ; get the address of errno
